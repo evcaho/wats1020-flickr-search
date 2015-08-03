@@ -21,12 +21,20 @@ $(document).on('ready', function(){
 				var newItem = $("<li>");
 				newItem.appendTo("#images");
         		$( "<img>" ).attr( "src", item.media.m ).appendTo( newItem );
+				$('h1.search-title').first()[0].innerHTML = "Search for: " + tags;
+    
+       			var newTitle = $('<p class="image-title">').html(item.title).appendTo(newItem);
+       			var newDate = $('<p class="image-date">').text(item.date_taken).appendTo(newItem);
+        		var newLink = $('<a>').attr('href', item.link).text('View on Flickr.').appendTo(newItem);
         		if ( i === 15 ) {
         			return false;
         		}
-      		});
+      	    });
     	});	
+
 	};
+			
+			
 
     $('button.search').on('click', function(event){
 		console.log("hello3");
@@ -37,9 +45,9 @@ $(document).on('ready', function(){
 		searchImages(searchTextInput.value);
 	});
 	
-
+	});
 	
-});
+
 
     // Inside the `searchImages()` function, the following things should happen:
 
