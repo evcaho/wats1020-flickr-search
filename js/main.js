@@ -1,3 +1,4 @@
+
 // Asynchronous Flickr Search
 //
 // Flickr reveals a searchable JSON Feed you can access via jQuery's $.getJSON()
@@ -6,11 +7,39 @@
 //
 // Allow users to click the images to see a larger version with more information.
 $(document).on('ready', function(){
-    // Place your code here, inside the document ready handler.
 
-    // Create a function called `searchImages()`. This function will handle the
-    // process of taking a user's search terms and sending them to Flickr for a
-    // response.
+	var searchImages = function(tags){
+		var flickrAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+		console.log (tags);
+		$.getJSON( flickrAPI, {
+   			 tags: tags,
+   			 tagmode: "any",
+    		format: "json"
+		}).done(function( data ) {
+			$("#images").empty();
+    		$.each( data.items, function( i, item ) {
+				var newItem = $("<li>");
+				newItem.appendTo("#images");
+        		$( "<img>" ).attr( "src", item.media.m ).appendTo( newItem );
+        		if ( i === 15 ) {
+        			return false;
+        		}
+      		});
+    	});	
+	};
+
+    $('button.search').on('click', function(event){
+		console.log("hello3");
+
+    	event.preventDefault();
+   		var searchTextInput = $(event.target.parentElement).find('input[name="searchText"]')[0];
+    	console.log(searchTextInput.value);
+		searchImages(searchTextInput.value);
+	});
+	
+
+	
+});
 
     // Inside the `searchImages()` function, the following things should happen:
 
@@ -46,4 +75,4 @@ $(document).on('ready', function(){
 
 
 
-});
+
